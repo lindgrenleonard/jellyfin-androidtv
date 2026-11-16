@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Custom build branding. Images live in /branding (run branding/generate.sh after changing them). -->
+<resources>
+    <!-- Startup (splash) screen. The background must match SPLASH_BACKGROUND in
+         branding/pixel_assets.py so the glow in splash_logo.png blends in seamlessly. -->
+    <color name="splash_background">#081419</color>
+    <!-- Shown as pixel art in splash_logo.png (SPLASH_TEXT in pixel_assets.py); used here for accessibility -->
+    <string name="splash_text" translatable="false">Evvenard TV</string>
+</resources>
