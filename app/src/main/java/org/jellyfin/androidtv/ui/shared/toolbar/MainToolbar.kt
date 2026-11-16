@@ -125,6 +125,8 @@ private fun MainToolbar(
 					}
 				}
 
+				Logo()
+
 				NowPlayingComposable(
 					onFocusableChange = {},
 				)

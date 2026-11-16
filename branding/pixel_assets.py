@@ -8,6 +8,7 @@ Outputs: branding/icon.png        - 40x40 launcher icon canvas
          branding/banner.png      - 80x45 Android TV banner canvas
          branding/splash_logo.png - startup screen canvas (berry + glow + SPLASH_TEXT); the app
                                     draws it at the largest whole-number scale that fits
+         branding/toolbar_logo.png - berry + NAME side by side, transparent, for the in-app toolbars
          branding/cloudberry.svg  - the sprite as a crisp vector (merged rectangles)
 
 All Android sizes are integer multiples of these canvases (icon 2-8x, banner 2-8x),
@@ -182,9 +183,18 @@ def main():
     paste(splash, text, (sw - text.shape[1]) // 2 + 1, by + bh + 6)
     save_png(splash, os.path.join(HERE, "splash_logo.png"))
 
+    # Toolbar logo: berry + name side by side on a transparent background (it sits on backdrops).
+    # The text's x-height (font rows 2-6) is centred on the berry body (sprite rows 9-27).
+    name = wordmark(NAME)
+    gap = 4
+    toolbar = np.zeros((bh, bw + gap + name.shape[1], 4), np.uint8)
+    paste(toolbar, berry, 0, 0)
+    paste(toolbar, name, bw + gap, (9 + 27) // 2 - 4)
+    save_png(toolbar, os.path.join(HERE, "toolbar_logo.png"))
+
     svg, rects = sprite_svg(berry)
     with open(os.path.join(HERE, "cloudberry.svg"), "w") as f: f.write(svg)
-    print(f"icon 40x40, banner 80x45 (wordmark {word.shape[1]}x{word.shape[0]}), splash {sw}x{sh}, svg {rects} rects, "
+    print(f"icon 40x40, banner 80x45 (wordmark {word.shape[1]}x{word.shape[0]}), splash {sw}x{sh}, toolbar {toolbar.shape[1]}x{toolbar.shape[0]}, svg {rects} rects, "
           f"{len(np.unique(berry[berry[..., 3] > 0][:, :3], axis=0))} colours")
 
 

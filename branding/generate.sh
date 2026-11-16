@@ -6,7 +6,7 @@
 #   branding/banner.png       16:9                      -> mipmap-*/app_banner.png  (Android TV home screen tile)
 #   branding/splash_logo.png  any size, transparent bg  -> drawable-nodpi/splash_logo.png
 #
-# Pixel art: icon.png, banner.png and splash_logo.png are built by pixel_assets.py from cloudberry.png
+# Pixel art: icon.png, banner.png, splash_logo.png and toolbar_logo.png are built by pixel_assets.py
 # (40x40, 80x45 and 73x60 canvases). When a target size is an exact multiple of the source,
 # it is scaled with nearest-neighbour so every art pixel stays crisp; otherwise it is
 # resized smoothly (for high-resolution, non-pixel-art images).
@@ -47,5 +47,7 @@ done
 # Splash logo: copied as-is (the app scales pixel art itself); oversized images are capped at 1200px
 mkdir -p "$res/drawable-nodpi"
 convert "$here/splash_logo.png" -resize '1200x1200>' -strip "PNG32:$res/drawable-nodpi/splash_logo.png"
+# Toolbar logo: pixel art, scaled by the app (PixelArtImage)
+convert "$here/toolbar_logo.png" -strip "PNG32:$res/drawable-nodpi/toolbar_logo.png"
 
 echo "Branding assets regenerated."
