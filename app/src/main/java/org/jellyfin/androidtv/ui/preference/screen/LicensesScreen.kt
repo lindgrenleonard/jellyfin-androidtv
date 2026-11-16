@@ -2,7 +2,7 @@ package org.jellyfin.androidtv.ui.preference.screen
 
 import androidx.core.os.bundleOf
 import com.mikepenz.aboutlibraries.Libs
-import com.mikepenz.aboutlibraries.util.withContext
+import com.mikepenz.aboutlibraries.util.withJson
 import org.jellyfin.androidtv.R
 import org.jellyfin.androidtv.ui.preference.dsl.OptionsFragment
 import org.jellyfin.androidtv.ui.preference.dsl.OptionsScreen
@@ -18,7 +18,7 @@ class LicensesScreen : OptionsFragment() {
 	}
 
 	private val libs by lazy {
-		Libs.Builder().withContext(requireContext()).build()
+		Libs.Builder().withJson(requireContext(), R.raw.aboutlibraries).build()
 	}
 
 	private fun OptionsScreen.createLibrary(artifactId: String) {
