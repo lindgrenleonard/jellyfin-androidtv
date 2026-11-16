@@ -18,6 +18,17 @@ android {
 		applicationId = namespace
 		versionName = project.getVersionName()
 		versionCode = getVersionCode(versionName!!)
+
+		// Custom build: only package native libraries for the target TV's CPU.
+		// armeabi-v7a also runs on 64-bit ARM TVs. Override with -Pcustom.abi=arm64-v8a
+		ndk {
+			abiFilters += (getProperty("custom.abi") ?: "armeabi-v7a").split(",")
+		}
+	}
+
+	// Custom build: only keep English resources (app and libraries)
+	androidResources {
+		localeFilters += listOf("en")
 	}
 
 	buildFeatures {
@@ -53,7 +64,13 @@ android {
 
 	buildTypes {
 		release {
-			isMinifyEnabled = false
+			// Custom build: R8 shrinking/optimization (obfuscation disabled in proguard-rules.pro)
+			isMinifyEnabled = true
+			isShrinkResources = true
+			proguardFiles(
+				getDefaultProguardFile("proguard-android-optimize.txt"),
+				"proguard-rules.pro",
+			)
 
 			// Set package names used in various XML files
 			resValue("string", "app_id", namespace!!)
